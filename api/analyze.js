@@ -43,7 +43,6 @@ JSON 형식으로만 응답하세요 (마크다운 코드블록 없이, 순수 J
     const parsed = JSON.parse(text);
     return res.status(200).json(parsed);
   } catch (err) {
-    console.error(err);
-    return res.status(500).json({ error: 'Analysis failed' });
+    return res.status(500).json({ error: err.message || 'Analysis failed' });
   }
 }
