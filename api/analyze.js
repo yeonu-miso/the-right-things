@@ -33,23 +33,13 @@ export default async function handler(req, res) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: {
-            temperature: 0.3,
-            responseMimeType: 'application/json'
-          }
+          generationConfig: { temperature: 0.3 }
         }),
       }
     );
 
     const data = await response.json();
-
-    if (!data.candidates || !data.candidates[0]) {
-      return res.status(500).json({ error: '응답 없음: ' + JSON.stringify(data) });
-    }
-
-    const text = data.candidates[0].content.parts[0].text.replace(/```json|```/g, '').trim();
-    const parsed = JSON.parse(text);
-    return res.status(200).json(parsed);
+    return res.status(200).json({ debug: data });
   } catch (err) {
     return res.status(500).json({ error: err.message || 'Analysis failed' });
   }
