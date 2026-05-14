@@ -145,6 +145,32 @@
 
   
 
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 6px;
+    padding: 1.5rem 2rem 0;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .tab-btn {
+    padding: 8px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    border: 0.5px solid #e0ddd6;
+    background: transparent;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .tab-btn.active {
+    background: #1a1a1a;
+    color: #fff;
+    border-color: #1a1a1a;
+  }
+
   /* Content */
   .content {
     max-width: 900px;
@@ -341,10 +367,16 @@
     </div>
   </div>
 
-    <div class="content">
+  
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab(1, this)">핵심가치 카드</button>
+    <button class="tab-btn" onclick="showTab(2, this)">AI 분석</button>
+  </div>
 
-    <!-- 핵심가치 카드 -->
-    <div>
+  <div class="content">
+
+    <!-- Page 1: Cards -->
+    <div id="page1">
       <div class="cards-grid">
 
         <div class="value-card">
@@ -428,12 +460,9 @@
       </div>
     </div>
 
-    <!-- 구분선 -->
-    <div style="border-top: 0.5px solid #e0ddd6; margin: 2.5rem 0;"></div>
-
-    <!-- AI 분석 -->
-    <div>
-      <div>
+    <!-- Page 2: AI Analyzer -->
+    <div id="page2" style="display:none;">
+      <div class="analyzer-wrap">
         <div class="analyzer-card">
           <div style="font-size:15px; font-weight:600; color:#1a1a1a; margin-bottom:8px;">AI 핵심가치 분석</div><div class="analyzer-label">업무 상황이나 고민을 입력하면 어떤 핵심가치와 연결되는지 분석해드려요. 무료 API 기준 하루 약 1,000회 사용 가능합니다.</div>
           <textarea id="userInput" placeholder="예: 팀장이 결정한 방향에 동의하지 않는데 어떻게 해야 할까요?"></textarea>
@@ -488,6 +517,13 @@ function logout() {
 }
 
 
+
+function showTab(n, btn) {
+  document.getElementById('page1').style.display = n===1 ? 'block' : 'none';
+  document.getElementById('page2').style.display = n===2 ? 'block' : 'none';
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
 
 async function analyze() {
   const input = document.getElementById('userInput').value.trim();
