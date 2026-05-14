@@ -8,22 +8,22 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'No input provided' });
   }
 
-  const prompt = `당신은 미소(Miso)의 핵심가치 전문가입니다. 사용자의 업무 상황이나 고민을 입력받아 아래 8가지 핵심가치 중 가장 관련 있는 1~2개를 분석해주세요.
+  const prompt = `You are an expert on Miso company core values. Analyze the user's work situation and identify 1-2 most relevant core values from the list below.
 
-핵심가치:
-1. Customers First - 고객 경험 최우선
-2. Simplicity - 복잡함을 걷어내고 본질에 집중
-3. Operational Excellence (Know Your Numbers) - 숫자로 말하고 데이터로 판단
-4. Be An Owner (회사 > 팀 > 나) - 주인의식
-5. Say What You Will Do & Do Whatever It Takes - 말한 것은 반드시 실행
-6. Move Fast - 빠른 실행과 학습
-7. Raise the Bar - 더 높은 기준
-8. Disagree & Commit - 솔직한 의견, 결정 후 온전한 실행
+Core values:
+1. Customers First
+2. Simplicity
+3. Operational Excellence (Know Your Numbers)
+4. Be An Owner
+5. Say What You Will Do & Do Whatever It Takes
+6. Move Fast
+7. Raise the Bar
+8. Disagree & Commit
 
-사용자 입력: ${input}
+User input: ${input}
 
-반드시 아래 JSON 형식으로만 응답하세요. 마크다운, 코드블록, 설명 없이 순수 JSON만:
-{"primary":"핵심가치 이름","primaryReason":"이유 2-3문장","secondary":"두번째 핵심가치 또는 null","secondaryReason":"이유 또는 null","advice":"실천 조언 2-3문장"}`;
+Respond ONLY with this exact JSON structure, no markdown, no explanation:
+{"primary":"value name in Korean","primaryReason":"reason in Korean 2-3 sentences","secondary":"second value name in Korean or null","secondaryReason":"reason in Korean or null","advice":"practical advice in Korean 2-3 sentences"}`;
 
   try {
     const response = await fetch(
@@ -33,14 +33,25 @@ export default async function handler(req, res) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.3 }
+          generationConfig: {
+            temperature: 0.3,
+            responseMimeType: 'application/json'
+          }
         }),
       }
     );
 
     const data = await response.json();
-    return res.status(200).json({ debug: data });
+
+    if (!data.candidates || !data.candidates[0]) {
+      return res.status(500).json({ error: 'Gemini error: ' + JSON.stringify(data) });
+    }
+
+    const rawText = data.candidates[0].content.parts[0].text;
+    const cleanText = rawText.replace(/```json|```/g, '').trim();
+    const parsed = JSON.parse(cleanText);
+    return res.status(200).json(parsed);
   } catch (err) {
-    return res.status(500).json({ error: err.message || 'Analysis failed' });
+    return res.status(500).json({ error: err.message });
   }
 }
