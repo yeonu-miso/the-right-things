@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>미소 핵심가치 학습</title>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8f7f4;
+    color: #1a1a1a;
+    min-height: 100vh;
+  }
+
+  /* Login Screen */
+  #loginScreen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  .login-card {
+    background: #fff;
+    border: 0.5px solid #e0ddd6;
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    max-width: 380px;
+    width: 100%;
+  }
+  .login-logo {
+    width: 48px;
+    height: 48px;
+    background: #1a1a1a;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 22px;
+  }
+  .login-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 8px;
+  }
+  .login-sub {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  .login-note {
+    font-size: 12px;
+    color: #aaa;
+    margin-top: 1.5rem;
+  }
+  #errorMsg {
+    display: none;
+    background: #fef2f2;
+    border: 0.5px solid #fca5a5;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: #dc2626;
+    margin-top: 1rem;
+  }
+
+  /* Main App */
+  #mainApp { display: none; }
+
+  /* Header */
+  .header {
+    background: #fff;
+    border-bottom: 0.5px solid #e0ddd6;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .header-logo {
+    width: 28px;
+    height: 28px;
+    background: #1a1a1a;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+  .header-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1a1a1a;
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .user-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #e8e6e0;
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    overflow: hidden;
+  }
+  .user-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .user-name { font-size: 13px; color: #555; }
+  .logout-btn {
+    font-size: 12px;
+    color: #aaa;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+  .logout-btn:hover { background: #f0ede8; color: #555; }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 6px;
+    padding: 1.5rem 2rem 0;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .tab-btn {
+    padding: 8px 18px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 8px;
+    border: 0.5px solid #e0ddd6;
+    background: transparent;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .tab-btn.active {
+    background: #1a1a1a;
+    color: #fff;
+    border-color: #1a1a1a;
+  }
+
+  /* Content */
+  .content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem 3rem;
+  }
+
+  /* Cards Grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  .value-card {
+    background: #fff;
+    border: 0.5px solid #e0ddd6;
+    border-radius: 14px;
+    padding: 1.25rem;
+    transition: border-color 0.15s;
+  }
+  .value-card:hover { border-color: #c8c5be; }
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .card-title { font-size: 15px; font-weight: 600; color: #1a1a1a; }
+  .card-desc {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.65;
+    margin-bottom: 12px;
+  }
+  .card-example {
+    background: #f8f7f4;
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .example-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #aaa;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 5px;
+  }
+  .example-text {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.55;
+  }
+
+  /* AI Analyzer */
+  .analyzer-wrap {
+    max-width: 640px;
+  }
+  .analyzer-card {
+    background: #fff;
+    border: 0.5px solid #e0ddd6;
+    border-radius: 14px;
+    padding: 1.25rem;
+    margin-bottom: 12px;
+  }
+  .analyzer-label {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 10px;
+    line-height: 1.6;
+  }
+  textarea {
+    width: 100%;
+    min-height: 110px;
+    font-size: 14px;
+    line-height: 1.65;
+    padding: 10px 12px;
+    border: 0.5px solid #e0ddd6;
+    border-radius: 8px;
+    resize: vertical;
+    font-family: inherit;
+    background: #f8f7f4;
+    color: #1a1a1a;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  textarea:focus { border-color: #1a1a1a; background: #fff; }
+  .analyze-btn {
+    margin-top: 10px;
+    padding: 9px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .analyze-btn:hover { opacity: 0.85; }
+  .analyze-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .result-card {
+    background: #fff;
+    border: 0.5px solid #e0ddd6;
+    border-radius: 14px;
+    padding: 1.25rem;
+    display: none;
+  }
+  .result-primary {
+    background: #eef4fd;
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+  }
+  .result-primary-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #3b6fd4;
+    margin-bottom: 5px;
+  }
+  .result-primary-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a3a7a;
+    margin-bottom: 6px;
+  }
+  .result-primary-text { font-size: 13px; color: #2d4fa0; line-height: 1.6; }
+  .result-secondary {
+    background: #f8f7f4;
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+  }
+  .result-secondary-title { font-size: 14px; font-weight: 600; color: #444; margin-bottom: 5px; }
+  .result-secondary-text { font-size: 13px; color: #666; line-height: 1.6; }
+  .result-advice {
+    border-top: 0.5px solid #e8e6e0;
+    padding-top: 12px;
+  }
+  .result-advice-label { font-size: 12px; font-weight: 600; color: #aaa; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .result-advice-text { font-size: 13px; color: #555; line-height: 1.65; }
+  .loading-text { font-size: 14px; color: #aaa; padding: 1rem 0; text-align: center; display: none; }
+</style>
+</head>
+<body>
+
+<!-- Login Screen -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo"><img src="data:image/png;base64,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SyyOy57j2klbemdP1jK03CsHCdyB1JdzJxyG52WveLpA6n+mgORtv4BSd0ada0+lNayUFymbDbbw1sD5HHDYpmk9W5x8Adzmk+G4E8grTax03adW6fqLJeqfrqWcA5acPjcO69h8HA9h+w5BIVBPQqXuGPHW/aXo4bVeac3u2xAMic6TbUQt8AHnIe0eAdz8N2MBbWptOT1M4rqI/rBjIzgnHIg94XTaLtFFGaeo7P8AnoVsFb0aLkLgW0WqqR1GTydNSOErR7mu2k/aPsUx8LOHdl4f2mSmt7pKqsqMGqrJQA+UjsAA5NaMnDfU5JPNafD0itBvgD30t8jfjnGaRpP3h+PxWla86RdbW0slHpC1vt+8Y9trC10rR+xGMtB9SXe5QU1PqW6tFNOCG9cgNHrjn6Z8lJxy2miJljIz4ZJ9F6PS11rTupafRFBMHzdY2puO0/qwOccZ9STvI8AG+arkuSpnmqaiSpqZpJp5Xl8kkji573E5LiTzJJ8Vxr0O0WyO2UjadhzjcnvJ5n89FVa+sdWTGV3p4BERFJrSREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREX//Z" style="width:48px;height:48px;border-radius:12px;"></div>
+    <div class="login-title">미소 핵심가치 학습</div>
+    <div class="login-sub">The Right Things 2025<br>Work Hard on the Right Things</div>
+    <div id="g_id_onload"
+      data-client_id="519359060465-e0efsb1hr2t3avukjdugmdv96ne6rsqr.apps.googleusercontent.com"
+      data-callback="handleCredentialResponse"
+      data-auto_prompt="false">
+    </div>
+    <div class="g_id_signin"
+      data-type="standard"
+      data-size="large"
+      data-theme="outline"
+      data-text="sign_in_with"
+      data-shape="rectangular"
+      data-logo_alignment="left">
+    </div>
+    <div id="errorMsg">@getmiso.com 계정으로만 접근할 수 있어요.</div>
+    <div class="login-note">getmiso.com 구글 계정으로 로그인하세요</div>
+  </div>
+</div>
+
+<!-- Main App -->
+<div id="mainApp">
+  <div class="header">
+    <div class="header-left">
+      <div class="header-logo"><img src="data:image/png;base64,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SyyOy57j2klbemdP1jK03CsHCdyB1JdzJxyG52WveLpA6n+mgORtv4BSd0ada0+lNayUFymbDbbw1sD5HHDYpmk9W5x8Adzmk+G4E8grTax03adW6fqLJeqfrqWcA5acPjcO69h8HA9h+w5BIVBPQqXuGPHW/aXo4bVeac3u2xAMic6TbUQt8AHnIe0eAdz8N2MBbWptOT1M4rqI/rBjIzgnHIg94XTaLtFFGaeo7P8AnoVsFb0aLkLgW0WqqR1GTydNSOErR7mu2k/aPsUx8LOHdl4f2mSmt7pKqsqMGqrJQA+UjsAA5NaMnDfU5JPNafD0itBvgD30t8jfjnGaRpP3h+PxWla86RdbW0slHpC1vt+8Y9trC10rR+xGMtB9SXe5QU1PqW6tFNOCG9cgNHrjn6Z8lJxy2miJljIz4ZJ9F6PS11rTupafRFBMHzdY2puO0/qwOccZ9STvI8AG+arkuSpnmqaiSpqZpJp5Xl8kkji573E5LiTzJJ8Vxr0O0WyO2UjadhzjcnvJ5n89FVa+sdWTGV3p4BERFJrSREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREX//Z" style="width:28px;height:28px;border-radius:6px;"></div>
+      <div class="header-title">미소 핵심가치 학습</div>
+    </div>
+    <div class="header-right">
+      <div class="user-info">
+        <div class="user-avatar" id="userAvatar"></div>
+        <div class="user-name" id="userName"></div>
+      </div>
+      <button class="logout-btn" onclick="logout()">로그아웃</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab(1, this)">핵심가치 카드</button>
+    <button class="tab-btn" onclick="showTab(2, this)">AI 분석</button>
+  </div>
+
+  <div class="content">
+
+    <!-- Page 1: Cards -->
+    <div id="page1">
+      <div class="cards-grid">
+
+        <div class="value-card">
+          <div class="card-header">
+            <div class="card-icon" style="background:#eef4fd;">💙</div>
+            <div class="card-title">Customers First</div>
+          </div>
+          <div class="card-desc">고객의 문제를 우리의 문제로 여기고, 고객 경험을 최우선으로 생각합니다.</div>
+          <div class="card-example">
+            <div class="example-label">상황 예시</div>
+            <div class="example-text">담당 부서가 아니더라도 고객 불편을 발견하면 먼저 확인하고 연결해준다.</div>
+          </div>
+        </div>
+
+        <div class="value-card">
+          <div class="card-header">
+            <div class="card-icon" style="background:#eaf5ee;">🌿</div>
+            <div class="card-title">Simplicity</div>
+          </div>
+          <div class="card-desc">복잡함을 걷어내고 본질에 집중합니다. 단순할수록 강력합니다.</div>
+          <div class="card-example">
+            <div class="example-label">상황 예시</div>
+            <div class="example-text">5페이지 보고서를 핵심만 담아 1페이지로 줄여 공유한다.</div>
+          </div>
+        </div>
+
+        <div class="value-card">
+          <div class="card-header">
+            <div class="card-icon" style="background:#fef9ee;">📊</div>
+            <div class="card-title">Operational Excellence</div>
+          </div>
+          <div class="card-desc">숫자로 말합니다. 감이 아닌 데이터로 판단하고 결과를 측정합니다.</div>
+          <div class="card-example">
+            <div class="example-label">상황 예시</div>
+            <div class="example-text">새 프로세스 도입 전후 소요 시간을 측정해 실제 개선 수치를 공유한다.</div>
+          </div>
+        </div>
+
+        <div class="value-card">
+          <div class="card-header">
+            <div class="card-icon" style="background:#f0eefe;">🏠</div>
+            <div class="card-title">Be An Owner</div>
+          </div>
+          <div class="card-desc">회사 &gt; 팀 &gt; 나. 주인의식을 갖고 내 일처럼 책임집니다.</div>
+          <div class="card-example">
+            <div class="example-label">상황 예시</div>
+            <div class="example-text">내 담당이 아니어도 회사에 손해가 되는 상황을 발견하면 적극적으로 나선다.</div>
+          </div>
+        </div>
+
+        <div class="value-card">
+          <div class="card-header">
+            <div class="card-icon" style="background:#fef0ee;">✅</div>
+            <div class="card-title">Say & Do</div>
+          </div>
+          <div class="card-desc">말한 것은 반드시 합니다. 약속을 지키는 것이 신뢰의 시작입니다.</div>
+          <div class="card-example">
+            <div class="example-label">상황 예시</div>
+            <div class="example-text">마감을 지키기 어려운 상황이 생기면 미리 공유하고 대안을 제시한다.</div>
+          </div>
+        </div>
+
+        <div class="value-card">
+          <div class="card-header">
+            <div class="card-icon" style="background:#eef8f4;">🚀</div>
+            <div class="card-title">Move Fast</div>
+          </div>
+          <div class="card-desc">빠르게 실행하고 빠르게 배웁니다. 완벽보다 속도가 먼저입니다.</div>
+          <div class="card-example">
+            <div class="example-label">상황 예시</div>
+            <div class="example-text">모든 걸 갖추기 전에 먼저 작게 시도하고 피드백을 받아 개선한다.</div>
+          </div>
+        </div>
+
+        <div class="value-card">
+          <div class="card-header">
+            <div class="card-icon" style="background:#fef0f5;">⬆️</div>
+            <div class="card-title">Raise the Bar</div>
+          </div>
+          <div class="card-desc">현재에 안주하지 않습니다. 더 높은 기준을 세우고 스스로를 밀어붙입니다.</div>
+          <div class="card-example">
+            <div class="example-label">상황 예시</div>
+            <div class="example-text">지난번보다 더 나은 결과물을 위해 스스로 피드백하고 다시 다듬는다.</div>
+          </div>
+        </div>
+
+        <div class="value-card">
+          <div class="card-header">
+            <div class="card-icon" style="background:#f5f4f2;">💬</div>
+            <div class="card-title">Disagree & Commit</div>
+          </div>
+          <div class="card-desc">다른 의견은 솔직하게 말하되, 결정되면 온전히 함께 실행합니다.</div>
+          <div class="card-example">
+            <div class="example-label">상황 예시</div>
+            <div class="example-text">회의에서 반대 의견을 냈지만 팀 결정이 내려지면 최선을 다해 함께 실행한다.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Page 2: AI Analyzer -->
+    <div id="page2" style="display:none;">
+      <div class="analyzer-wrap">
+        <div class="analyzer-card">
+          <div class="analyzer-label">업무 상황이나 고민을 입력하면 어떤 핵심가치와 연결되는지 분석해드려요.</div>
+          <textarea id="userInput" placeholder="예: 팀장이 결정한 방향에 동의하지 않는데 어떻게 해야 할까요?"></textarea>
+          <button class="analyze-btn" onclick="analyze()" id="analyzeBtn">분석하기 ↗</button>
+        </div>
+        <div class="loading-text" id="loadingText">분석 중...</div>
+        <div class="result-card" id="resultCard">
+          <div id="resultContent"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const CLIENT_ID = '519359060465-e0efsb1hr2t3avukjdugmdv96ne6rsqr.apps.googleusercontent.com';
+const ALLOWED_DOMAIN = 'getmiso.com';
+
+function handleCredentialResponse(response) {
+  const payload = parseJwt(response.credential);
+  const email = payload.email || '';
+  if (!email.endsWith('@' + ALLOWED_DOMAIN)) {
+    document.getElementById('errorMsg').style.display = 'block';
+    return;
+  }
+  document.getElementById('errorMsg').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('mainApp').style.display = 'block';
+
+  const name = payload.name || email.split('@')[0];
+  document.getElementById('userName').textContent = name;
+  const avatar = document.getElementById('userAvatar');
+  if (payload.picture) {
+    avatar.innerHTML = `<img src="${payload.picture}" alt="${name}">`;
+  } else {
+    avatar.textContent = name.charAt(0).toUpperCase();
+  }
+  window._googleToken = response.credential;
+}
+
+function parseJwt(token) {
+  try {
+    return JSON.parse(atob(token.split('.')[1]));
+  } catch(e) { return {}; }
+}
+
+function logout() {
+  document.getElementById('mainApp').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+  window._googleToken = null;
+}
+
+function showTab(n, btn) {
+  document.getElementById('page1').style.display = n===1 ? 'block' : 'none';
+  document.getElementById('page2').style.display = n===2 ? 'block' : 'none';
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+async function analyze() {
+  const input = document.getElementById('userInput').value.trim();
+  if (!input) return;
+  const btn = document.getElementById('analyzeBtn');
+  btn.disabled = true;
+  document.getElementById('resultCard').style.display = 'none';
+  document.getElementById('loadingText').style.display = 'block';
+
+  const systemPrompt = `당신은 미소(Miso)의 핵심가치 전문가입니다. 사용자의 업무 상황이나 고민을 입력받아 아래 8가지 핵심가치 중 가장 관련 있는 1~2개를 분석해주세요.
+
+핵심가치:
+1. Customers First - 고객 경험 최우선
+2. Simplicity - 복잡함을 걷어내고 본질에 집중
+3. Operational Excellence (Know Your Numbers) - 숫자로 말하고 데이터로 판단
+4. Be An Owner (회사 > 팀 > 나) - 주인의식
+5. Say What You Will Do & Do Whatever It Takes - 말한 것은 반드시 실행
+6. Move Fast - 빠른 실행과 학습
+7. Raise the Bar - 더 높은 기준
+8. Disagree & Commit - 솔직한 의견, 결정 후 온전한 실행
+
+JSON 형식으로만 응답하세요 (마크다운 없이):
+{"primary":"핵심가치 이름","primaryReason":"이유 2-3문장","secondary":"두번째 핵심가치 또는 null","secondaryReason":"이유 또는 null","advice":"실천 조언 2-3문장"}`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: input }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content[0].text.replace(/```json|```/g, '').trim();
+    const p = JSON.parse(text);
+
+    let html = `
+      <div class="result-primary">
+        <div class="result-primary-label">주요 핵심가치</div>
+        <div class="result-primary-title">${p.primary}</div>
+        <div class="result-primary-text">${p.primaryReason}</div>
+      </div>`;
+    if (p.secondary) {
+      html += `
+      <div class="result-secondary">
+        <div class="result-secondary-title">연관 핵심가치: ${p.secondary}</div>
+        <div class="result-secondary-text">${p.secondaryReason}</div>
+      </div>`;
+    }
+    html += `
+      <div class="result-advice">
+        <div class="result-advice-label">실천 조언</div>
+        <div class="result-advice-text">${p.advice}</div>
+      </div>`;
+
+    document.getElementById('resultContent').innerHTML = html;
+    document.getElementById('loadingText').style.display = 'none';
+    document.getElementById('resultCard').style.display = 'block';
+  } catch(e) {
+    document.getElementById('loadingText').style.display = 'none';
+    document.getElementById('resultCard').style.display = 'block';
+    document.getElementById('resultContent').innerHTML = '<p style="color:#dc2626;font-size:13px;">분석 중 오류가 발생했어요. 다시 시도해주세요.</p>';
+  }
+  btn.disabled = false;
+}
+</script>
+</body>
+</html>
