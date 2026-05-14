@@ -22,7 +22,7 @@ export default async function handler(req, res) {
 
 사용자 입력: ${input}
 
-JSON 형식으로만 응답하세요 (마크다운 코드블록 없이, 순수 JSON만):
+반드시 아래 JSON 형식으로만 응답하세요. 마크다운, 코드블록, 설명 없이 순수 JSON만:
 {"primary":"핵심가치 이름","primaryReason":"이유 2-3문장","secondary":"두번째 핵심가치 또는 null","secondaryReason":"이유 또는 null","advice":"실천 조언 2-3문장"}`;
 
   try {
@@ -33,12 +33,20 @@ JSON 형식으로만 응답하세요 (마크다운 코드블록 없이, 순수 J
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.3 }
+          generationConfig: {
+            temperature: 0.3,
+            responseMimeType: 'application/json'
+          }
         }),
       }
     );
 
     const data = await response.json();
+
+    if (!data.candidates || !data.candidates[0]) {
+      return res.status(500).json({ error: '응답 없음: ' + JSON.stringify(data) });
+    }
+
     const text = data.candidates[0].content.parts[0].text.replace(/```json|```/g, '').trim();
     const parsed = JSON.parse(text);
     return res.status(200).json(parsed);
