@@ -14,8 +14,6 @@
     color: #1a1a1a;
     min-height: 100vh;
   }
-
-  /* Login Screen */
   #loginScreen {
     min-height: 100vh;
     display: flex;
@@ -35,31 +33,13 @@
   .login-logo {
     width: 48px;
     height: 48px;
-    background: #1a1a1a;
     border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     margin: 0 auto 1.5rem;
-    font-size: 22px;
+    overflow: hidden;
   }
-  .login-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: #1a1a1a;
-    margin-bottom: 8px;
-  }
-  .login-sub {
-    font-size: 14px;
-    color: #888;
-    margin-bottom: 2rem;
-    line-height: 1.6;
-  }
-  .login-note {
-    font-size: 12px;
-    color: #aaa;
-    margin-top: 1.5rem;
-  }
+  .login-title { font-size: 20px; font-weight: 600; color: #1a1a1a; margin-bottom: 8px; }
+  .login-sub { font-size: 14px; color: #888; margin-bottom: 2rem; line-height: 1.6; }
+  .login-note { font-size: 12px; color: #aaa; margin-top: 1.5rem; }
   #errorMsg {
     display: none;
     background: #fef2f2;
@@ -70,11 +50,7 @@
     color: #dc2626;
     margin-top: 1rem;
   }
-
-  /* Main App */
   #mainApp { display: none; }
-
-  /* Header */
   .header {
     background: #fff;
     border-bottom: 0.5px solid #e0ddd6;
@@ -87,66 +63,24 @@
     top: 0;
     z-index: 10;
   }
-  .header-left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .header-logo {
-    width: 28px;
-    height: 28px;
-    background: #1a1a1a;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-  }
-  .header-title {
-    font-size: 15px;
-    font-weight: 500;
-    color: #1a1a1a;
-  }
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .user-info {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
+  .header-left { display: flex; align-items: center; gap: 10px; }
+  .header-logo { width: 28px; height: 28px; border-radius: 6px; overflow: hidden; }
+  .header-title { font-size: 15px; font-weight: 500; color: #1a1a1a; }
+  .header-right { display: flex; align-items: center; gap: 12px; }
+  .user-info { display: flex; align-items: center; gap: 8px; }
   .user-avatar {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: #e8e6e0;
-    font-size: 12px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #555;
-    overflow: hidden;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: #e8e6e0; font-size: 12px; font-weight: 500;
+    display: flex; align-items: center; justify-content: center;
+    color: #555; overflow: hidden;
   }
   .user-avatar img { width: 100%; height: 100%; object-fit: cover; }
   .user-name { font-size: 13px; color: #555; }
   .logout-btn {
-    font-size: 12px;
-    color: #aaa;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 4px 8px;
-    border-radius: 6px;
+    font-size: 12px; color: #aaa; background: none;
+    border: none; cursor: pointer; padding: 4px 8px; border-radius: 6px;
   }
   .logout-btn:hover { background: #f0ede8; color: #555; }
-
-  
-
-
-  /* Tabs */
   .tabs {
     display: flex;
     gap: 6px;
@@ -170,15 +104,11 @@
     color: #fff;
     border-color: #1a1a1a;
   }
-
-  /* Content */
   .content {
     max-width: 900px;
     margin: 0 auto;
     padding: 1.5rem 2rem 3rem;
   }
-
-  /* Cards Grid */
   .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -192,134 +122,47 @@
     transition: border-color 0.15s;
   }
   .value-card:hover { border-color: #c8c5be; }
-  .card-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-  }
+  .card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
   .card-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    flex-shrink: 0;
+    width: 36px; height: 36px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
   }
   .card-title { font-size: 15px; font-weight: 600; color: #1a1a1a; }
-  .card-desc {
-    font-size: 13px;
-    color: #666;
-    line-height: 1.65;
-    margin-bottom: 12px;
-  }
-  .card-example {
-    background: #f8f7f4;
-    border-radius: 8px;
-    padding: 10px 12px;
-  }
-  .example-label {
-    font-size: 11px;
-    font-weight: 600;
-    color: #aaa;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 5px;
-  }
-  .example-text {
-    font-size: 13px;
-    color: #666;
-    line-height: 1.55;
-  }
-
-  /* AI Analyzer */
-  .analyzer-wrap {
-    max-width: 640px;
-  }
+  .card-subtitle { font-size: 12px; color: #aaa; margin-top: 3px; }
+  .card-desc { font-size: 13px; color: #666; line-height: 1.65; }
+  .analyzer-wrap { max-width: 640px; }
   .analyzer-card {
-    background: #fff;
-    border: 0.5px solid #e0ddd6;
-    border-radius: 14px;
-    padding: 1.25rem;
-    margin-bottom: 12px;
+    background: #fff; border: 0.5px solid #e0ddd6;
+    border-radius: 14px; padding: 1.25rem; margin-bottom: 12px;
   }
-  .analyzer-label {
-    font-size: 13px;
-    color: #888;
-    margin-bottom: 10px;
-    line-height: 1.6;
-  }
+  .analyzer-label { font-size: 13px; color: #888; margin-bottom: 10px; line-height: 1.6; }
   textarea {
-    width: 100%;
-    min-height: 110px;
-    font-size: 14px;
-    line-height: 1.65;
-    padding: 10px 12px;
-    border: 0.5px solid #e0ddd6;
-    border-radius: 8px;
-    resize: vertical;
-    font-family: inherit;
-    background: #f8f7f4;
-    color: #1a1a1a;
-    outline: none;
-    transition: border-color 0.15s;
+    width: 100%; min-height: 110px; font-size: 14px; line-height: 1.65;
+    padding: 10px 12px; border: 0.5px solid #e0ddd6; border-radius: 8px;
+    resize: vertical; font-family: inherit; background: #f8f7f4;
+    color: #1a1a1a; outline: none; transition: border-color 0.15s;
   }
   textarea:focus { border-color: #1a1a1a; background: #fff; }
   .analyze-btn {
-    margin-top: 10px;
-    padding: 9px 20px;
-    font-size: 14px;
-    font-weight: 500;
-    background: #1a1a1a;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: opacity 0.15s;
+    margin-top: 10px; padding: 9px 20px; font-size: 14px; font-weight: 500;
+    background: #1a1a1a; color: #fff; border: none; border-radius: 8px;
+    cursor: pointer; transition: opacity 0.15s;
   }
   .analyze-btn:hover { opacity: 0.85; }
   .analyze-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
   .result-card {
-    background: #fff;
-    border: 0.5px solid #e0ddd6;
-    border-radius: 14px;
-    padding: 1.25rem;
-    display: none;
+    background: #fff; border: 0.5px solid #e0ddd6;
+    border-radius: 14px; padding: 1.25rem; display: none;
   }
-  .result-primary {
-    background: #eef4fd;
-    border-radius: 8px;
-    padding: 12px 14px;
-    margin-bottom: 10px;
-  }
-  .result-primary-label {
-    font-size: 12px;
-    font-weight: 600;
-    color: #3b6fd4;
-    margin-bottom: 5px;
-  }
-  .result-primary-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: #1a3a7a;
-    margin-bottom: 6px;
-  }
+  .result-primary { background: #eef4fd; border-radius: 8px; padding: 12px 14px; margin-bottom: 10px; }
+  .result-primary-label { font-size: 12px; font-weight: 600; color: #3b6fd4; margin-bottom: 5px; }
+  .result-primary-title { font-size: 15px; font-weight: 600; color: #1a3a7a; margin-bottom: 6px; }
   .result-primary-text { font-size: 13px; color: #2d4fa0; line-height: 1.6; }
-  .result-secondary {
-    background: #f8f7f4;
-    border-radius: 8px;
-    padding: 12px 14px;
-    margin-bottom: 10px;
-  }
+  .result-secondary { background: #f8f7f4; border-radius: 8px; padding: 12px 14px; margin-bottom: 10px; }
   .result-secondary-title { font-size: 14px; font-weight: 600; color: #444; margin-bottom: 5px; }
   .result-secondary-text { font-size: 13px; color: #666; line-height: 1.6; }
-  .result-advice {
-    border-top: 0.5px solid #e8e6e0;
-    padding-top: 12px;
-  }
+  .result-advice { border-top: 0.5px solid #e8e6e0; padding-top: 12px; }
   .result-advice-label { font-size: 12px; font-weight: 600; color: #aaa; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em; }
   .result-advice-text { font-size: 13px; color: #555; line-height: 1.65; }
   .loading-text { font-size: 14px; color: #aaa; padding: 1rem 0; text-align: center; display: none; }
@@ -327,7 +170,6 @@
 </head>
 <body>
 
-<!-- Login Screen -->
 <div id="loginScreen">
   <div class="login-card">
     <div class="login-logo"><img src="data:image/png;base64,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SyyOy57j2klbemdP1jK03CsHCdyB1JdzJxyG52WveLpA6n+mgORtv4BSd0ada0+lNayUFymbDbbw1sD5HHDYpmk9W5x8Adzmk+G4E8grTax03adW6fqLJeqfrqWcA5acPjcO69h8HA9h+w5BIVBPQqXuGPHW/aXo4bVeac3u2xAMic6TbUQt8AHnIe0eAdz8N2MBbWptOT1M4rqI/rBjIzgnHIg94XTaLtFFGaeo7P8AnoVsFb0aLkLgW0WqqR1GTydNSOErR7mu2k/aPsUx8LOHdl4f2mSmt7pKqsqMGqrJQA+UjsAA5NaMnDfU5JPNafD0itBvgD30t8jfjnGaRpP3h+PxWla86RdbW0slHpC1vt+8Y9trC10rR+xGMtB9SXe5QU1PqW6tFNOCG9cgNHrjn6Z8lJxy2miJljIz4ZJ9F6PS11rTupafRFBMHzdY2puO0/qwOccZ9STvI8AG+arkuSpnmqaiSpqZpJp5Xl8kkji573E5LiTzJJ8Vxr0O0WyO2UjadhzjcnvJ5n89FVa+sdWTGV3p4BERFJrSREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREREX//Z" style="width:48px;height:48px;border-radius:12px;"></div>
@@ -339,19 +181,14 @@
       data-auto_prompt="false">
     </div>
     <div class="g_id_signin"
-      data-type="standard"
-      data-size="large"
-      data-theme="outline"
-      data-text="sign_in_with"
-      data-shape="rectangular"
-      data-logo_alignment="left">
+      data-type="standard" data-size="large" data-theme="outline"
+      data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="left">
     </div>
     <div id="errorMsg">@getmiso.com 계정으로만 접근할 수 있어요.</div>
     <div class="login-note">getmiso.com 구글 계정으로 로그인하세요</div>
   </div>
 </div>
 
-<!-- Main App -->
 <div id="mainApp">
   <div class="header">
     <div class="header-left">
@@ -367,7 +204,6 @@
     </div>
   </div>
 
-  
   <div class="tabs">
     <button class="tab-btn active" onclick="showTab(1, this)">핵심가치 카드</button>
     <button class="tab-btn" onclick="showTab(2, this)">AI 분석</button>
@@ -375,96 +211,104 @@
 
   <div class="content">
 
-    <!-- Page 1: Cards -->
     <div id="page1">
       <div class="cards-grid">
 
         <div class="value-card">
           <div class="card-header">
             <div class="card-icon" style="background:#eef4fd;">💙</div>
-            <div class="card-title">Customers First</div>
-            <div style="font-size:12px; color:#aaa; margin-top:3px;">고객이 먼저입니다</div>
+            <div>
+              <div class="card-title">Customers First</div>
+              <div class="card-subtitle">고객이 먼저입니다</div>
+            </div>
           </div>
           <div class="card-desc">고객에게 이로운 결정, 정책, 기능을 만듭니다. 심지어 그게 우리를 더 힘들게 하더라도. 고객이 만족하면, 파트너도 만족합니다. 우선순위는 언제나 고객 → 파트너 → 팀 → 투자자입니다.</div>
-          </div>
         </div>
 
         <div class="value-card">
           <div class="card-header">
             <div class="card-icon" style="background:#eaf5ee;">🌿</div>
-            <div class="card-title">Simplicity</div>
-            <div style="font-size:12px; color:#aaa; margin-top:3px;">단순하게</div>
+            <div>
+              <div class="card-title">Simplicity</div>
+              <div class="card-subtitle">단순하게</div>
+            </div>
           </div>
           <div class="card-desc">단순함이란 무언가를 빼는 게 아니라, 본질을 깊이 이해한 뒤 본질만 남기는 것입니다. "이걸 굳이 없앨 필요가 있는가?"가 아니라 "이게 왜 존재해야 하는가?"를 반복해서 물어야 합니다.</div>
-          </div>
         </div>
 
         <div class="value-card">
           <div class="card-header">
             <div class="card-icon" style="background:#fef9ee;">📊</div>
-            <div class="card-title">Operational Excellence</div>
-            <div style="font-size:12px; color:#aaa; margin-top:3px;">숫자로 탁월하게</div>
+            <div>
+              <div class="card-title">Operational Excellence</div>
+              <div class="card-subtitle">숫자로 탁월하게</div>
+            </div>
           </div>
           <div class="card-desc">측정하지 않으면 개선할 수 없습니다. 숫자를 꿰뚫고 있어야 합니다. 누군가가 수치를 물었을 때 대시보드를 열 필요도 없어야 합니다. 이미 알고 있으니까요.</div>
-          </div>
         </div>
 
         <div class="value-card">
           <div class="card-header">
             <div class="card-icon" style="background:#f0eefe;">🏠</div>
-            <div class="card-title">Be An Owner</div>
-            <div style="font-size:12px; color:#aaa; margin-top:3px;">오너가 되세요</div>
+            <div>
+              <div class="card-title">Be An Owner</div>
+              <div class="card-subtitle">오너가 되세요</div>
+            </div>
           </div>
           <div class="card-desc">진짜 오너는 "이게 내 일인가요?"라고 묻지 않습니다. 대신 "이기려면 뭐가 필요하죠?"라고 묻습니다. 미소에서 당신의 일은 시간을 채우는 게 아닙니다. 임팩트를 만드는 일입니다.</div>
-          </div>
         </div>
 
         <div class="value-card">
           <div class="card-header">
             <div class="card-icon" style="background:#fef0ee;">✅</div>
-            <div class="card-title">Say What You Will Do & Do Whatever It Takes</div>
+            <div>
+              <div class="card-title">Say What You Will Do & Do Whatever It Takes</div>
+              <div class="card-subtitle">할 일을 말하고, 수단과 방법을 가리지 마세요</div>
+            </div>
           </div>
           <div class="card-desc">분명하게 약속하세요. 집요하게 해내세요. 당신의 말에 책임지세요. 수단과 방법을 가리지 말고 해내야 합니다.</div>
-          </div>
         </div>
 
         <div class="value-card">
           <div class="card-header">
             <div class="card-icon" style="background:#eef8f4;">🚀</div>
-            <div class="card-title">Move Fast</div>
-            <div style="font-size:12px; color:#aaa; margin-top:3px;">빠르게 움직이세요</div>
+            <div>
+              <div class="card-title">Move Fast</div>
+              <div class="card-subtitle">빠르게 움직이세요</div>
+            </div>
           </div>
           <div class="card-desc">속도는 무기입니다. 결정하고, 실행하고, 빠르게 조정하세요. 우리가 결정하거나 다음 단계를 밟아야 할 일은 하루 안에 무조건 처리합니다. 영업일 기준이 아닙니다.</div>
-          </div>
         </div>
 
         <div class="value-card">
           <div class="card-header">
             <div class="card-icon" style="background:#fef0f5;">⬆️</div>
-            <div class="card-title">Raise the Bar</div>
-            <div style="font-size:12px; color:#aaa; margin-top:3px;">기준을 높이세요</div>
+            <div>
+              <div class="card-title">Raise the Bar</div>
+              <div class="card-subtitle">기준을 높이세요</div>
+            </div>
           </div>
           <div class="card-desc">안주하지 마세요. 스스로에게, 그리고 모두에게 더 높은 기준을 요구하세요. 뛰어난 하나가 괜찮은 열 개를 이깁니다. 마법은 마지막 20%에서 벌어집니다.</div>
-          </div>
         </div>
 
         <div class="value-card">
           <div class="card-header">
             <div class="card-icon" style="background:#f5f4f2;">💬</div>
-            <div class="card-title">Disagree & Commit</div>
+            <div>
+              <div class="card-title">Disagree & Commit</div>
+              <div class="card-subtitle">반대하되 따르세요</div>
+            </div>
           </div>
           <div class="card-desc">거침없이 반대하세요. 확실하게 결정하세요. 끝까지 실행하세요. 반대 의견은 결정 전에 치열하게 나누되, 결정이 내려지면 온전히 함께 실행합니다.</div>
-          </div>
         </div>
 
       </div>
     </div>
 
-    <!-- Page 2: AI Analyzer -->
     <div id="page2" style="display:none;">
       <div class="analyzer-wrap">
         <div class="analyzer-card">
-          <div style="font-size:15px; font-weight:600; color:#1a1a1a; margin-bottom:8px;">AI 핵심가치 분석</div><div class="analyzer-label">업무 상황이나 고민을 입력하면 어떤 핵심가치와 연결되는지 분석해드려요. 무료 API 기준 하루 약 1,000회 사용 가능합니다.</div>
+          <div class="analyzer-label">업무 상황이나 고민을 입력하면 어떤 핵심가치와 연결되는지 분석해드려요.<br><span style="color:#bbb;">무료 API 기준 하루 약 1,000회 사용 가능합니다.</span></div>
           <textarea id="userInput" placeholder="예: 팀장이 결정한 방향에 동의하지 않는데 어떻게 해야 할까요?"></textarea>
           <button class="analyze-btn" onclick="analyze()" id="analyzeBtn">분석하기 ↗</button>
         </div>
@@ -479,7 +323,6 @@
 </div>
 
 <script>
-const CLIENT_ID = '519359060465-e0efsb1hr2t3avukjdugmdv96ne6rsqr.apps.googleusercontent.com';
 const ALLOWED_DOMAIN = 'getmiso.com';
 
 function handleCredentialResponse(response) {
@@ -492,7 +335,6 @@ function handleCredentialResponse(response) {
   document.getElementById('errorMsg').style.display = 'none';
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('mainApp').style.display = 'block';
-
   const name = payload.name || email.split('@')[0];
   document.getElementById('userName').textContent = name;
   const avatar = document.getElementById('userAvatar');
@@ -501,22 +343,16 @@ function handleCredentialResponse(response) {
   } else {
     avatar.textContent = name.charAt(0).toUpperCase();
   }
-  window._googleToken = response.credential;
 }
 
 function parseJwt(token) {
-  try {
-    return JSON.parse(atob(token.split('.')[1]));
-  } catch(e) { return {}; }
+  try { return JSON.parse(atob(token.split('.')[1])); } catch(e) { return {}; }
 }
 
 function logout() {
   document.getElementById('mainApp').style.display = 'none';
   document.getElementById('loginScreen').style.display = 'flex';
-  window._googleToken = null;
 }
-
-
 
 function showTab(n, btn) {
   document.getElementById('page1').style.display = n===1 ? 'block' : 'none';
@@ -566,9 +402,7 @@ async function analyze() {
   } catch(e) {
     document.getElementById('loadingText').style.display = 'none';
     document.getElementById('resultCard').style.display = 'block';
-    let errMsg = '분석 중 오류가 발생했어요. 다시 시도해주세요.';
-    try { const errData = await res.json(); errMsg = errData.error || errMsg; } catch(e2) {}
-    document.getElementById('resultContent').innerHTML = '<p style="color:#dc2626;font-size:13px;">' + errMsg + '</p>';
+    document.getElementById('resultContent').innerHTML = '<p style="color:#dc2626;font-size:13px;">분석 중 오류가 발생했어요. 다시 시도해주세요.</p>';
   }
   btn.disabled = false;
 }
